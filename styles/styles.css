@@ -220,6 +220,54 @@ main > .section > div {
   }
 }
 
+/* First section: SEO category navigation - horizontal scrollable bar */
+main > .section:first-of-type {
+  border-bottom: 1px solid #e0e0e0;
+  padding: 12px 16px;
+}
+
+main > .section:first-of-type > div {
+  max-width: 100%;
+}
+
+main > .section:first-of-type h1 {
+  font-size: 13px;
+  font-weight: 600;
+  margin: 0 0 8px;
+  text-transform: uppercase;
+}
+
+main > .section:first-of-type ul {
+  display: flex;
+  gap: 16px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  overflow-x: auto;
+  white-space: nowrap;
+  scrollbar-width: none;
+}
+
+main > .section:first-of-type ul::-webkit-scrollbar {
+  display: none;
+}
+
+main > .section:first-of-type li {
+  flex-shrink: 0;
+  font-size: 13px;
+}
+
+main > .section:first-of-type a:any-link {
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--text-color);
+  text-decoration: none;
+}
+
+main > .section:first-of-type a:hover {
+  text-decoration: underline;
+}
+
 /* section metadata */
 main .section.light-grey {
   background-color: var(--light-color);
