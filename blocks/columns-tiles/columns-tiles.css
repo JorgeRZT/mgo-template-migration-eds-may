@@ -1,33 +1,80 @@
+/*
+ * columns-tiles: 2-column image tile grid with text overlay at bottom.
+ * Note: This block renders as a section (class on section div).
+ * DOM: .columns-tiles.section > div (wrapper) > div (row) > div (cell)
+ */
+
+/* Full-width section: remove max-width and padding from the wrapper */
 .columns-tiles > div {
-  display: flex;
-  flex-direction: column;
+  max-width: 100% !important;
+  padding: 0 !important;
 }
 
-.columns-tiles img {
-  width: 100%;
-}
-
+/* Row: flex container, side-by-side tiles, no gap */
 .columns-tiles > div > div {
-  order: 1;
+  display: flex;
+  flex-direction: row;
+  gap: 0;
+  padding: 0;
+  margin: 0;
 }
 
-.columns-tiles > div > .columns-tiles-img-col {
-  order: 0;
+/* Each cell (tile) */
+.columns-tiles > div > div > div {
+  position: relative;
+  flex: 1;
+  aspect-ratio: 5 / 7;
+  overflow: hidden;
+  background-color: #333;
 }
 
-.columns-tiles > div > .columns-tiles-img-col img {
-  display: block;
+/* Heading positioned at bottom of each tile */
+.columns-tiles > div > div > div h2 {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0;
+  padding: 24px;
+  font-size: 13px;
+  font-weight: 600;
+  font-family: var(--heading-font-family);
+  text-transform: uppercase;
+  letter-spacing: normal;
+  line-height: 20px;
+  color: rgb(253 253 253);
 }
 
+/* Link inherits tile text color, no underline */
+.columns-tiles > div > div > div h2 a:any-link {
+  color: rgb(253 253 253);
+  text-decoration: none;
+}
+
+.columns-tiles > div > div > div h2 a:hover {
+  text-decoration: none;
+  color: rgb(253 253 253);
+}
+
+/* Image fill (when images are added) */
+.columns-tiles > div > div > div picture {
+  position: absolute;
+  inset: 0;
+}
+
+.columns-tiles > div > div > div picture img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Desktop: square tiles */
 @media (width >= 900px) {
-  .columns-tiles > div {
-    align-items: center;
-    flex-direction: unset;
-    gap: 24px;
-  }
-
-  .columns-tiles > div > div {
-    flex: 1;
-    order: unset;
+  .columns-tiles > div > div > div {
+    aspect-ratio: 1 / 1;
   }
 }

@@ -1,47 +1,151 @@
-.hero-promo-container .hero-promo-wrapper {
+/* hero-promo block
+ * Full-viewport promotional banner with background image,
+ * centered decorative title image (logo), and CTA link.
+ * EDS treats this as a section (class "hero-promo section").
+ */
+
+/* Section-level: full width, no max-width constraint */
+main > .hero-promo {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: calc(100vh - var(--nav-height));
+  max-width: unset !important;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+/* All rows: centered content, on top of media */
+main > .hero-promo > div {
+  position: relative;
+  z-index: 1;
   max-width: unset;
   padding: 0;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  width: 100%;
 }
 
-.hero-promo {
-  position: relative;
-  padding: 40px 24px;
-  min-height: 300px;
-}
-
-.hero-promo h1,
-.hero-promo h2,
-.hero-promo h3,
-.hero-promo h4,
-.hero-promo h5,
-.hero-promo h6,
-.hero-promo p {
-  max-width: 1200px;
-  margin-left: auto;
-  margin-right: auto;
-  color: var(--background-color);
-}
-
-.hero-promo.no-image * {
-  color: var(--text-color);
-}
-
-.hero-promo picture {
+/* Row 1: background image - covers the entire block */
+main > .hero-promo > div:first-child {
   position: absolute;
-  z-index: -1;
   inset: 0;
-  object-fit: cover;
-  box-sizing: border-box;
+  z-index: 0;
+  display: block;
 }
 
-.hero-promo img {
-  object-fit: cover;
+main > .hero-promo > div:first-child picture {
+  display: block;
   width: 100%;
   height: 100%;
 }
 
+main > .hero-promo > div:first-child img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Row 2: title logo image - centered over background */
+main > .hero-promo > div:nth-child(2) {
+  padding: 0 24px;
+}
+
+main > .hero-promo > div:nth-child(2) picture {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+main > .hero-promo > div:nth-child(2) img {
+  width: 80%;
+  max-width: 550px;
+  height: auto;
+  object-fit: contain;
+}
+
+/* Row 3: CTA link - white, uppercase, centered below logo */
+main > .hero-promo > div:nth-child(3) {
+  margin-top: 12px;
+  padding: 0 24px;
+}
+
+/* Inner wrappers - fill space for row 1, center for row 2 */
+/* stylelint-disable no-descending-specificity */
+main > .hero-promo > div:first-child > div,
+main > .hero-promo > div:first-child > div > div {
+  width: 100%;
+  height: 100%;
+}
+
+main > .hero-promo > div:nth-child(2) > div,
+main > .hero-promo > div:nth-child(2) > div > div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+/* stylelint-enable no-descending-specificity */
+
+/* CTA link styles */
+main > .hero-promo a:any-link {
+  color: rgb(253 253 253);
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+main > .hero-promo a:hover {
+  text-decoration: underline;
+  color: rgb(253 253 253);
+}
+
+/* Override button decoration for CTA links inside hero-promo */
+main > .hero-promo .button-wrapper {
+  display: inline;
+}
+
+main > .hero-promo a.button:any-link {
+  background: none;
+  border: none;
+  border-radius: 0;
+  padding: 0;
+  color: rgb(253 253 253);
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+main > .hero-promo a.button:any-link:hover {
+  text-decoration: underline;
+  color: rgb(253 253 253);
+}
+
+/* No-image fallback */
+main > .hero-promo.no-image {
+  background-color: var(--light-color);
+  min-height: 400px;
+}
+
+main > .hero-promo.no-image a:any-link,
+main > .hero-promo.no-image a.button:any-link {
+  color: var(--text-color);
+}
+
+/* Desktop */
 @media (width >= 900px) {
-  .hero-promo {
-    padding: 40px 32px;
+  main > .hero-promo > div:nth-child(2) img {
+    width: 550px;
+    max-width: 550px;
   }
 }

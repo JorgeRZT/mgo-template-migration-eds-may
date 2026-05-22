@@ -1,47 +1,167 @@
-.hero-landing-container .hero-landing-wrapper {
+/* hero-landing block
+ * Full-viewport hero banner with background media (image or video)
+ * and centered text overlay (heading + CTA).
+ * EDS treats this as a section (class "hero-landing section").
+ */
+
+/* Section-level: full width, no max-width constraint */
+main > .hero-landing {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: calc(100vh - var(--nav-height));
+  max-width: unset !important;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+/* All rows: centered content, on top of media */
+main > .hero-landing > div {
+  position: relative;
+  z-index: 1;
   max-width: unset;
   padding: 0;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  width: 100%;
 }
 
-.hero-landing {
-  position: relative;
-  padding: 40px 24px;
-  min-height: 300px;
+/* Row 2 (heading): stacked centered overlay */
+main > .hero-landing > div:nth-child(2) {
+  padding: 0 24px;
 }
 
-.hero-landing h1,
-.hero-landing h2,
-.hero-landing h3,
-.hero-landing h4,
-.hero-landing h5,
-.hero-landing h6,
-.hero-landing p {
-  max-width: 1200px;
-  margin-left: auto;
-  margin-right: auto;
-  color: var(--background-color);
+/* Row 3 (CTA): centered below heading */
+main > .hero-landing > div:nth-child(3) {
+  margin-top: 12px;
+  padding: 0 24px;
 }
 
-.hero-landing.no-image * {
-  color: var(--text-color);
-}
-
-.hero-landing picture {
+/* Row 1: media (picture/img or video) - covers the entire block */
+main > .hero-landing > div:first-child {
   position: absolute;
-  z-index: -1;
   inset: 0;
-  object-fit: cover;
-  box-sizing: border-box;
+  z-index: 0;
+  display: block;
 }
 
-.hero-landing img {
-  object-fit: cover;
+main > .hero-landing > div:first-child > div,
+main > .hero-landing > div:first-child > div > div {
   width: 100%;
   height: 100%;
 }
 
+main > .hero-landing > div:first-child picture {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+main > .hero-landing > div:first-child img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+main > .hero-landing > div:first-child video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Hide the raw video URL link (plain text link to video asset) */
+main > .hero-landing > div:first-child a {
+  display: none;
+}
+
+/* Heading styles */
+main > .hero-landing h2 {
+  font-family: var(--heading-font-family);
+  font-size: 28px;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: uppercase;
+  color: rgb(253 253 253);
+  text-shadow: rgb(19 19 19 / 20%) 0 0 14px;
+  margin: 0;
+  max-width: none;
+}
+
+/* CTA link */
+/* stylelint-disable-next-line no-descending-specificity */
+main > .hero-landing a:any-link {
+  color: rgb(253 253 253);
+  font-size: var(--body-font-size-s);
+  font-weight: 600;
+  text-decoration: none;
+  text-transform: uppercase;
+  text-shadow: rgb(19 19 19 / 20%) 0 0 14px;
+}
+
+/* stylelint-disable-next-line no-descending-specificity */
+main > .hero-landing a:hover {
+  text-decoration: underline;
+  color: rgb(253 253 253);
+}
+
+/* When only 2 rows (no-image variant: heading + CTA only) */
+main > .hero-landing > div:first-child:nth-last-child(2),
+main > .hero-landing > div:first-child:nth-last-child(2) ~ div {
+  position: relative;
+  z-index: 1;
+}
+
+/* Override button decoration for CTA links inside hero */
+main > .hero-landing .button-wrapper {
+  display: inline;
+}
+
+main > .hero-landing a.button:any-link {
+  background: none;
+  border: none;
+  border-radius: 0;
+  padding: 0;
+  color: rgb(253 253 253);
+  font-size: var(--body-font-size-s);
+  font-weight: 600;
+  text-decoration: none;
+  text-transform: uppercase;
+  text-shadow: rgb(19 19 19 / 20%) 0 0 14px;
+}
+
+main > .hero-landing a.button:any-link:hover {
+  text-decoration: underline;
+  color: rgb(253 253 253);
+}
+
+/* Blocks without a background image (no-image variant) */
+main > .hero-landing.no-image {
+  background-color: var(--light-color);
+  min-height: 400px;
+}
+
+main > .hero-landing.no-image h2 {
+  color: var(--text-color);
+  text-shadow: none;
+}
+
+main > .hero-landing.no-image a:any-link,
+main > .hero-landing.no-image a.button:any-link {
+  color: var(--text-color);
+  text-shadow: none;
+}
+
+/* Desktop */
 @media (width >= 900px) {
-  .hero-landing {
-    padding: 40px 32px;
+  main > .hero-landing h2 {
+    font-size: 40px;
+    line-height: 40px;
   }
 }

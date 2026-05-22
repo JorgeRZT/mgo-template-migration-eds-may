@@ -114,6 +114,36 @@ function decorateButtons(main) {
 }
 
 /**
+ * Decorates hero-landing sections.
+ * EDS treats hero-landing as a section (not a block), so we manually
+ * load the block CSS and run the decorator for these sections.
+ * @param {Element} main The main element
+ */
+async function decorateHeroLandingSections(main) {
+  const heroSections = main.querySelectorAll('.hero-landing.section');
+  if (heroSections.length === 0) return;
+
+  loadCSS(`${window.hlx.codeBasePath}/blocks/hero-landing/hero-landing.css`);
+  const { default: decorate } = await import('../blocks/hero-landing/hero-landing.js');
+  heroSections.forEach((section) => decorate(section));
+}
+
+/**
+ * Decorates hero-promo sections.
+ * EDS treats hero-promo as a section (not a block), so we manually
+ * load the block CSS and run the decorator for these sections.
+ * @param {Element} main The main element
+ */
+async function decorateHeroPromoSections(main) {
+  const heroPromoSections = main.querySelectorAll('.hero-promo.section');
+  if (heroPromoSections.length === 0) return;
+
+  loadCSS(`${window.hlx.codeBasePath}/blocks/hero-promo/hero-promo.css`);
+  const { default: decorate } = await import('../blocks/hero-promo/hero-promo.js');
+  heroPromoSections.forEach((section) => decorate(section));
+}
+
+/**
  * Decorates the main element.
  * @param {Element} main The main element
  */
@@ -124,6 +154,8 @@ export function decorateMain(main) {
   decorateSections(main);
   decorateBlocks(main);
   decorateButtons(main);
+  decorateHeroLandingSections(main);
+  decorateHeroPromoSections(main);
 }
 
 /**
