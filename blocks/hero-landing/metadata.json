@@ -1,0 +1,39 @@
+{
+  "variantName": "hero-landing",
+  "baseBlock": "hero",
+  "version": "1.0.0",
+  "created": "2026-05-22T08:39:35.112Z",
+  "sourceContext": {
+    "originUrl": "https://shop.mango.com/es/es/h/home",
+    "originPage": "Mango Home landing page",
+    "blockPosition": "top"
+  },
+  "visualCharacteristics": {
+    "colorScheme": "dark",
+    "density": "spacious",
+    "purpose": "collection-hero",
+    "imagePattern": "large"
+  },
+  "contentPattern": {
+    "structure": "background image/video + heading + CTA link",
+    "buttonCount": 1,
+    "imageCount": 1
+  },
+  "reuseGuidance": {
+    "suitableFor": [
+      "landing pages with full-viewport hero banners",
+      "collection pages with large background imagery",
+      "campaign pages with video backgrounds"
+    ],
+    "notSuitableFor": [
+      "content-heavy pages without strong imagery",
+      "product detail pages",
+      "form-focused pages"
+    ]
+  },
+  "usage": {
+    "pagesUsing": ["/es/es/h/home"],
+    "reuseCount": 1,
+    "lastUsed": "2026-05-22T08:39:35.112Z"
+  }
+}

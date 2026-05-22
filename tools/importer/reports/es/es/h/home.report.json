@@ -1,0 +1,18 @@
+{
+  "status": "success",
+  "url": "https://shop.mango.com/es/es/h/home",
+  "path": "es/es/h/home",
+  "timestamp": "2026-05-22T09:04:03.095Z",
+  "title": "Moda de Home 2026 | Mango Home España (Península y Baleares)",
+  "template": "homepage",
+  "blocks": [
+    "hero-landing",
+    "hero-landing",
+    "hero-landing",
+    "hero-landing",
+    "hero-landing",
+    "columns-tiles",
+    "columns-tiles",
+    "hero-promo"
+  ]
+}

@@ -3,49 +3,37 @@ header .nav-wrapper {
   background-color: var(--background-color);
   width: 100%;
   z-index: 2;
-  position: fixed;
+  position: sticky;
+  top: 0;
 }
 
 header nav {
   box-sizing: border-box;
-  display: grid;
-  grid-template:
-    'hamburger brand tools' var(--nav-height)
-    'sections sections sections' 1fr / auto 1fr auto;
+  display: flex;
   align-items: center;
-  gap: 0 24px;
+  justify-content: space-between;
   margin: auto;
-  max-width: 1248px;
+  max-width: 100%;
   height: var(--nav-height);
-  padding: 0 24px;
+  padding: 6px 10px;
   font-family: var(--body-font-family);
 }
 
 header nav[aria-expanded='true'] {
-  grid-template:
-    'hamburger brand' var(--nav-height)
-    'sections sections' 1fr
-    'tools tools' var(--nav-height) / auto 1fr;
+  flex-wrap: wrap;
   overflow-y: auto;
   min-height: 100dvh;
 }
 
 @media (width >= 900px) {
-  header .nav-wrapper {
-    position: relative;
-  }
-
   header nav {
-    display: flex;
-    justify-content: space-between;
-    gap: 0 32px;
-    max-width: 1264px;
     padding: 0 32px;
   }
 
   header nav[aria-expanded='true'] {
     min-height: 0;
     overflow: visible;
+    flex-wrap: nowrap;
   }
 }
 
@@ -56,11 +44,11 @@ header nav p {
 
 header nav a:any-link {
   color: currentcolor;
+  text-decoration: none;
 }
 
 /* hamburger */
 header nav .nav-hamburger {
-  grid-area: hamburger;
   height: 22px;
   display: flex;
   align-items: center;
@@ -141,7 +129,6 @@ header nav[aria-expanded='true'] .nav-hamburger-icon::after {
 
 /* brand */
 header .nav-brand {
-  grid-area: brand;
   flex-basis: 128px;
   font-size: var(--heading-font-size-s);
   font-weight: 700;
@@ -155,7 +142,6 @@ header nav .nav-brand img {
 
 /* sections */
 header nav .nav-sections {
-  grid-area: sections;
   flex: 1 1 auto;
   display: none;
   visibility: hidden;
@@ -170,11 +156,12 @@ header nav[aria-expanded='true'] .nav-sections {
 header nav .nav-sections ul {
   list-style: none;
   padding-left: 0;
-  font-size: var(--body-font-size-s);
+  font-size: 13px;
+  font-weight: 600;
 }
 
 header nav .nav-sections ul > li {
-  font-weight: 500;
+  font-weight: 600;
 }
 
 header nav .nav-sections ul > li > ul {
@@ -268,5 +255,16 @@ header nav .nav-sections ul > li > ul > li {
 
 /* tools */
 header nav .nav-tools {
-  grid-area: tools;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+header nav .nav-tools a:any-link {
+  font-size: 0;
+}
+
+header nav .nav-tools .icon {
+  width: 20px;
+  height: 20px;
 }
