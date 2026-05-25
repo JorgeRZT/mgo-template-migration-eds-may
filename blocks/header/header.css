@@ -169,6 +169,51 @@ header nav .nav-sections li a:hover {
   opacity: 1;
 }
 
+/* Mega-menu dropdown */
+header nav .nav-sections > div > ul > li {
+  position: relative;
+}
+
+header nav .nav-sections > div > ul > li > ul {
+  display: none;
+  position: fixed;
+  top: var(--nav-height);
+  left: 0;
+  width: 100vw;
+  background: var(--background-color);
+  padding: 40px 32px;
+  margin: 0;
+  list-style: none;
+  flex-flow: row wrap;
+  gap: 8px 32px;
+  box-shadow: 0 4px 12px rgb(0 0 0 / 8%);
+  z-index: 100;
+  max-height: calc(100vh - var(--nav-height));
+  overflow-y: auto;
+}
+
+header nav .nav-sections > div > ul > li:hover > ul,
+header nav .nav-sections > div > ul > li:focus-within > ul {
+  display: flex;
+}
+
+header nav .nav-sections > div > ul > li > ul > li {
+  white-space: nowrap;
+}
+
+header nav .nav-sections > div > ul > li > ul > li a:any-link {
+  font-size: 13px;
+  font-weight: 400;
+  text-transform: none;
+  letter-spacing: normal;
+  color: var(--text-color);
+}
+
+header nav .nav-sections > div > ul > li > ul > li a:hover {
+  text-decoration: underline;
+  opacity: 1;
+}
+
 @media (width >= 900px) {
   header nav .nav-sections {
     display: flex;
