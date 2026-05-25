@@ -123,22 +123,21 @@ async function decorateHeroLandingSections(main) {
   const heroSections = [];
 
   sections.forEach((section) => {
-    // Already has the class (local dev)
     if (section.classList.contains('hero-landing')) {
       heroSections.push(section);
       return;
     }
-    // Detect by content: section with a Dynamic Media link or just h2+CTA (no other blocks)
+    if (section.classList.contains('columns-tiles')) return;
     const wrapper = section.querySelector('.default-content-wrapper');
     if (!wrapper) return;
     const h2 = wrapper.querySelector('h2');
     const link = wrapper.querySelector('a');
-    if (!h2 || !link) return;
-    // Check for video link (Dynamic Media /is/content/) or link whose title contains /is/content/
+    if (!h2) return;
     const videoLink = wrapper.querySelector('a[title*="/is/content/"], a[href*="/is/content/"]');
     const picture = wrapper.querySelector('picture');
-    // Must have media (video link or picture) + heading + cta, and few children
-    if ((videoLink || picture) && wrapper.children.length <= 4) {
+    const headings = wrapper.querySelectorAll('h2');
+    // Hero pattern: single h2 + optional media + optional CTA link, max 5 children
+    if (headings.length === 1 && (videoLink || picture || link) && wrapper.children.length <= 5) {
       section.classList.add('hero-landing');
       heroSections.push(section);
     }
