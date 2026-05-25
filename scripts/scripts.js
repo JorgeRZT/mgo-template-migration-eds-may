@@ -167,12 +167,32 @@ async function decorateHeroPromoSections(main) {
 }
 
 /**
- * Loads CSS for columns-tiles sections (treated as sections, not blocks).
+ * Detects and styles columns-tiles sections by class or content pattern.
+ * Pattern: section with exactly 2 h2 headings (each with a link) and no other block content.
  * @param {Element} main The main element
  */
 function decorateColumnsTilesSections(main) {
-  const tilesSections = main.querySelectorAll('.columns-tiles.section');
-  if (tilesSections.length === 0) return;
+  const sections = main.querySelectorAll(':scope > div.section');
+  let found = false;
+
+  sections.forEach((section) => {
+    if (section.classList.contains('columns-tiles')) {
+      found = true;
+      return;
+    }
+    const wrapper = section.querySelector('.default-content-wrapper');
+    if (!wrapper) return;
+    const headings = wrapper.querySelectorAll('h2');
+    if (headings.length === 2 && wrapper.children.length <= 4) {
+      const allHaveLinks = [...headings].every((h) => h.querySelector('a'));
+      if (allHaveLinks) {
+        section.classList.add('columns-tiles');
+        found = true;
+      }
+    }
+  });
+
+  if (!found) return;
   loadCSS(`${window.hlx.codeBasePath}/blocks/columns-tiles/columns-tiles.css`);
 }
 
