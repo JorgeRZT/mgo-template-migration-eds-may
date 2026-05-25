@@ -148,14 +148,14 @@ async function decorateHeroPromoSections(main) {
  * @param {Element} main The main element
  */
 // eslint-disable-next-line import/prefer-default-export
-export function decorateMain(main) {
+export async function decorateMain(main) {
   decorateIcons(main);
   buildAutoBlocks(main);
   decorateSections(main);
   decorateBlocks(main);
   decorateButtons(main);
-  decorateHeroLandingSections(main);
-  decorateHeroPromoSections(main);
+  await decorateHeroLandingSections(main);
+  await decorateHeroPromoSections(main);
 }
 
 /**
@@ -167,7 +167,7 @@ async function loadEager(doc) {
   decorateTemplateAndTheme();
   const main = doc.querySelector('main');
   if (main) {
-    decorateMain(main);
+    await decorateMain(main);
     document.body.classList.add('appear');
     await loadSection(main.querySelector('.section'), waitForFirstImage);
   }

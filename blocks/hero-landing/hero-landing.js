@@ -24,6 +24,8 @@ export default function decorate(block) {
       video.muted = true;
       video.playsInline = true;
       video.setAttribute('playsinline', '');
+      video.setAttribute('muted', '');
+      video.setAttribute('autoplay', '');
 
       // Find the deepest container and replace the link
       const cell = videoLink.closest('div');
