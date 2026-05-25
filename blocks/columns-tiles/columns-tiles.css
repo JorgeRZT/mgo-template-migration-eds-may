@@ -23,9 +23,15 @@
 .columns-tiles > div > div > div {
   position: relative;
   flex: 1;
-  aspect-ratio: 5 / 7;
+  min-height: 200px;
   overflow: hidden;
   background-color: #333;
+}
+
+/* Only use aspect-ratio when tile has an image */
+.columns-tiles > div > div > div:has(picture) {
+  aspect-ratio: 5 / 7;
+  min-height: auto;
 }
 
 /* Heading positioned at bottom of each tile */

@@ -167,6 +167,16 @@ async function decorateHeroPromoSections(main) {
 }
 
 /**
+ * Loads CSS for columns-tiles sections (treated as sections, not blocks).
+ * @param {Element} main The main element
+ */
+function decorateColumnsTilesSections(main) {
+  const tilesSections = main.querySelectorAll('.columns-tiles.section');
+  if (tilesSections.length === 0) return;
+  loadCSS(`${window.hlx.codeBasePath}/blocks/columns-tiles/columns-tiles.css`);
+}
+
+/**
  * Decorates the main element.
  * @param {Element} main The main element
  */
@@ -179,6 +189,7 @@ export async function decorateMain(main) {
   decorateButtons(main);
   await decorateHeroLandingSections(main);
   await decorateHeroPromoSections(main);
+  decorateColumnsTilesSections(main);
 }
 
 /**
