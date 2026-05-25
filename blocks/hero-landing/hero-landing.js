@@ -1,24 +1,32 @@
 /**
- * Decorates the hero-landing block.
- * Note: EDS treats hero-landing as a section (not a block), so this JS
- * is also called from scripts.js for section-level decoration.
+ * Decorates the hero-landing block/section.
+ * Converts video URL links to actual video elements and sets up the overlay layout.
+ * Works both with block table structure (local) and default-content-wrapper (.page/.live).
  * @param {HTMLElement} block The hero-landing element
  */
 export default function decorate(block) {
+  // Find the content container - either first row div (block table) or default-content-wrapper
   const firstRow = block.querySelector(':scope > div:first-child');
   if (!firstRow) return;
 
-  const hasPicture = !!firstRow.querySelector('picture');
+  const contentArea = firstRow.querySelector('.default-content-wrapper') || firstRow;
+  const hasPicture = !!contentArea.querySelector('picture');
 
-  // Convert video URL links to actual video elements
-  const videoLink = firstRow.querySelector('a');
+  // Find video link - check both in firstRow (block structure) and contentArea (.page structure)
+  const videoLink = contentArea.querySelector('a[title*="/is/content/"], a[href*="/is/content/"]')
+    || contentArea.querySelector('a[href$=".mp4"], a[href$=".webm"]');
+
   if (videoLink && !hasPicture) {
-    const href = videoLink.href || videoLink.textContent.trim();
-    const isVideoUrl = href.includes('/is/content/') || href.endsWith('.mp4') || href.endsWith('.webm');
+    const originalUrl = videoLink.getAttribute('title') || videoLink.textContent.trim() || videoLink.href;
+    const isVideoUrl = originalUrl.includes('/is/content/')
+      || originalUrl.endsWith('.mp4')
+      || originalUrl.endsWith('.webm');
 
     if (isVideoUrl) {
+      const videoSrc = originalUrl.startsWith('http') ? originalUrl : videoLink.href;
+
       const video = document.createElement('video');
-      video.src = href;
+      video.src = videoSrc;
       video.autoplay = true;
       video.loop = true;
       video.muted = true;
@@ -27,17 +35,37 @@ export default function decorate(block) {
       video.setAttribute('muted', '');
       video.setAttribute('autoplay', '');
 
-      // Find the deepest container and replace the link
-      const cell = videoLink.closest('div');
-      if (cell) {
-        cell.innerHTML = '';
-        cell.appendChild(video);
+      // Replace the link with the video element
+      const linkParent = videoLink.parentElement;
+      if (linkParent) {
+        linkParent.replaceChild(video, videoLink);
       }
     } else {
-      // Non-video, non-picture: mark as no-image
       block.classList.add('no-image');
     }
   } else if (!hasPicture) {
-    block.classList.add('no-image');
+    // Check if there's a video link anywhere else in the block (non-standard structure)
+    const anyVideoLink = block.querySelector('a[title*="/is/content/"], a[href*="/is/content/"]');
+    if (anyVideoLink) {
+      const originalUrl = anyVideoLink.getAttribute('title') || anyVideoLink.textContent.trim() || anyVideoLink.href;
+      const videoSrc = originalUrl.startsWith('http') ? originalUrl : anyVideoLink.href;
+
+      const video = document.createElement('video');
+      video.src = videoSrc;
+      video.autoplay = true;
+      video.loop = true;
+      video.muted = true;
+      video.playsInline = true;
+      video.setAttribute('playsinline', '');
+      video.setAttribute('muted', '');
+      video.setAttribute('autoplay', '');
+
+      const linkParent = anyVideoLink.parentElement;
+      if (linkParent) {
+        linkParent.replaceChild(video, anyVideoLink);
+      }
+    } else {
+      block.classList.add('no-image');
+    }
   }
 }

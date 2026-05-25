@@ -114,13 +114,36 @@ function decorateButtons(main) {
 }
 
 /**
- * Decorates hero-landing sections.
- * EDS treats hero-landing as a section (not a block), so we manually
- * load the block CSS and run the decorator for these sections.
+ * Detects hero-landing sections by class or by content pattern (video/image + h2 + CTA).
+ * On .page/.live the class may not be present, so we detect by structure.
  * @param {Element} main The main element
  */
 async function decorateHeroLandingSections(main) {
-  const heroSections = main.querySelectorAll('.hero-landing.section');
+  const sections = main.querySelectorAll(':scope > div.section');
+  const heroSections = [];
+
+  sections.forEach((section) => {
+    // Already has the class (local dev)
+    if (section.classList.contains('hero-landing')) {
+      heroSections.push(section);
+      return;
+    }
+    // Detect by content: section with a Dynamic Media link or just h2+CTA (no other blocks)
+    const wrapper = section.querySelector('.default-content-wrapper');
+    if (!wrapper) return;
+    const h2 = wrapper.querySelector('h2');
+    const link = wrapper.querySelector('a');
+    if (!h2 || !link) return;
+    // Check for video link (Dynamic Media /is/content/) or link whose title contains /is/content/
+    const videoLink = wrapper.querySelector('a[title*="/is/content/"], a[href*="/is/content/"]');
+    const picture = wrapper.querySelector('picture');
+    // Must have media (video link or picture) + heading + cta, and few children
+    if ((videoLink || picture) && wrapper.children.length <= 4) {
+      section.classList.add('hero-landing');
+      heroSections.push(section);
+    }
+  });
+
   if (heroSections.length === 0) return;
 
   loadCSS(`${window.hlx.codeBasePath}/blocks/hero-landing/hero-landing.css`);
